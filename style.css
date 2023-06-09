@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+
+.calc-container {
+    display: flex;
+    width: 256px;
+    flex-wrap: wrap;
+    border-style: solid;
+    border-radius: 8px;
+}
+
+#display {
+    display: flex;
+    width: 256px;
+    height: 80px;
+    background-color: grey;
+    border-bottom-style: solid;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 36px;
+
+
+}
+
+button {
+    width: 64px;
+    height: 64px;
+}
+
+#enter-btn {
+    width: 128px;
+    background-color: orange;
+}
