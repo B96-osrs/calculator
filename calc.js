@@ -14,12 +14,12 @@ const buttonPower = document.querySelector("#power-btn");
 const buttonPlus = document.querySelector("#plus-btn");
 const buttonMinus = document.querySelector("#minus-btn");
 const buttonMultiply = document.querySelector("#multiply-btn");
-const buttonDivie = document.querySelector("#divide-btn");
+const buttonDivide = document.querySelector("#divide-btn");
 const buttonDecimal = document.querySelector("#decimal-btn");
 const buttonEnter = document.querySelector("#enter-btn");
-const operand1 = 20;
-const operand2 = 30;
-const operator = "";
+let operand1 = 0;
+let operand2 = 0;
+let operator = "";
 const display = document.querySelector("#display");
 
 function addNumber() {
@@ -35,11 +35,44 @@ function multiplyNumber() {
 }
 
 function divideNumber() {
-    if(operand2 === 0) {
-        return "ERROR"
+    if(parseInt(operand2) === 0) {
+        return "u stoopid?"
     }
-    return operand1/operand2;
+    return parseInt(operand1) / parseInt(operand2);
 }
+function calculateInput() {
+    let displayArray = Array.from(display.textContent);
+
+    if(displayArray.includes("+")) {
+        displayArray =  display.textContent.split("+")
+        operand1 = displayArray[0];
+        operand2 = displayArray[1];
+        return parseInt(operand1) + parseInt(operand2);
+    }
+    if(displayArray.includes("-")) {
+        const displayArray =  display.textContent.split("-")
+        operand1 = displayArray[0];
+        operand2 = displayArray[1];
+        return parseInt(operand1) - parseInt(operand2);
+    }
+    if(displayArray.includes("*")) {
+        const displayArray =  display.textContent.split("*")
+        operand1 = displayArray[0];
+        operand2 = displayArray[1];
+        return parseInt(operand1) * parseInt(operand2);
+    }
+    if(displayArray.includes("/")) {
+        const displayArray =  display.textContent.split("/")
+        operand1 = displayArray[0];
+        operand2 = displayArray[1];
+        console.log(operand1 +" " + operand2)
+        return divideNumber(operand1,operand2);
+    }
+    return "Error";
+}
+
+
+
 
 function updateDisplay() {
     button1.addEventListener("click", function() {
@@ -76,12 +109,27 @@ function updateDisplay() {
     buttonClear.addEventListener("click", function() {
         display.textContent = "";
     });
+    buttonPlus.addEventListener("click", function() {
+        operator = "+";
+        display.textContent += "+";
+    });
+    buttonMinus.addEventListener("click", function() {
+        operator = "-";
+        display.textContent += "-";
+    });
+    buttonDivide.addEventListener("click", function() {
+        operator = "/";
+        display.textContent += "/";
+    });
+    buttonMultiply.addEventListener("click", function() {
+        operator = "*";
+        display.textContent += operator;
+    });
+    buttonEnter.addEventListener("click", function() {
+        display.textContent = calculateInput();
+    });
+    
 
 }
 
 updateDisplay();
-
-
-
-
-console.log(display.textContent);
