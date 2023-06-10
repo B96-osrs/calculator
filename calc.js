@@ -19,7 +19,7 @@ const buttonDecimal = document.querySelector("#decimal-btn");
 const buttonEnter = document.querySelector("#enter-btn");
 let operand1 = 0;
 let operand2 = 0;
-let operator = "";
+let operator;
 const display = document.querySelector("#display");
 
 function addNumber() {
@@ -71,59 +71,122 @@ function calculateInput() {
     return "Error";
 }
 
+function checkDisplayForOperator() {
+
+    let displayArray =  display.textContent.split(operator);
+    displayArray = displayArray.filter(e => e !=="");
+    console.log(displayArray);
+      if(display.textContent.includes(operator)) {
+        console.log(displayArray.length);
+        if(displayArray.length > 1) {
+            console.log("length > 1")
+            buttonEnter.click();
+        }
+        else if(displayArray.length === 1 ) {
+            console.log("length === 1")
+            display.textContent = display.textContent.slice(0,-1);
+        }
+      }
+}
+
+function checkDisplaySpace() {
+    let displayArray = Array.from(display.textContent);
+    console.log(displayArray);
+    if(displayArray.length < 14) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 
 
 
 function updateDisplay() {
     button1.addEventListener("click", function() {
-        display.textContent += "1";
+        if(checkDisplaySpace()) {
+            display.textContent += "1";
+        }
+        
     });
 
     button2.addEventListener("click", function() {
-        display.textContent += "2";
+        if(checkDisplaySpace()) {
+            display.textContent += "2";
+        }
     });
     button3.addEventListener("click", function() {
-        display.textContent += "3";
+        if(checkDisplaySpace()) {
+            display.textContent += "3";
+        }
     });
     button4.addEventListener("click", function() {
-        display.textContent += "4";
+        if(checkDisplaySpace()) {
+            display.textContent += "4";
+        }
     });
     button5.addEventListener("click", function() {
-        display.textContent += "5";
+        if(checkDisplaySpace()) {
+            display.textContent += "5";
+        }
     });
     button6.addEventListener("click", function() {
-        display.textContent += "6";
+        if(checkDisplaySpace()) {
+            display.textContent += "6";
+        }
     });
     button7.addEventListener("click", function() {
-        display.textContent += "7";
+        if(checkDisplaySpace()) {
+            display.textContent += "7";
+        }
     });
     button8.addEventListener("click", function() {
-        display.textContent += "8";
+        if(checkDisplaySpace()) {
+            display.textContent += "8";
+        }
     });
     button9.addEventListener("click", function() {
-        display.textContent += "9";
+        if(checkDisplaySpace()) {
+            display.textContent += "9";
+        }
     });
     button0.addEventListener("click", function() {
-        display.textContent += "0";
+        if(checkDisplaySpace()) {
+            display.textContent += "0";
+        }
     });
     buttonClear.addEventListener("click", function() {
         display.textContent = "";
     });
     buttonPlus.addEventListener("click", function() {
-        operator = "+";
-        display.textContent += "+";
+        if(checkDisplaySpace()) {
+            checkDisplayForOperator();
+            operator = "+";
+            display.textContent += "+";          
+        }
+
     });
     buttonMinus.addEventListener("click", function() {
-        operator = "-";
-        display.textContent += "-";
+        if(checkDisplaySpace()) {
+            checkDisplayForOperator();
+            operator = "-";
+            display.textContent += "-";          
+        }
     });
     buttonDivide.addEventListener("click", function() {
-        operator = "/";
-        display.textContent += "/";
+        if(checkDisplaySpace()) {
+            checkDisplayForOperator();
+            operator = "/";
+            display.textContent += "/";          
+        }
     });
     buttonMultiply.addEventListener("click", function() {
-        operator = "*";
-        display.textContent += operator;
+        if(checkDisplaySpace()) {
+            checkDisplayForOperator();
+            operator = "*";
+            display.textContent += "*";          
+        }
     });
     buttonEnter.addEventListener("click", function() {
         display.textContent = calculateInput();
@@ -133,3 +196,6 @@ function updateDisplay() {
 }
 
 updateDisplay();
+
+
+
