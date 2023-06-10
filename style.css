@@ -4,6 +4,7 @@ body {
     align-items: center;
     height: 100vh;
     box-sizing: border-box;
+    background-color: #525252;
 }
 
 
@@ -13,27 +14,38 @@ body {
     flex-wrap: wrap;
     border-style: solid;
     border-radius: 8px;
-}
+     -webkit-box-shadow: 0 0 5px 4px rgb(41, 40, 39);
+    -moz-box-shadow: 0 0 5px 4px rgb(41, 40, 39);
+    box-shadow: 0 0 5px 2px rgb(41, 40, 39);
+} 
 
 #display {
     display: flex;
     width: 256px;
     height: 80px;
-    background-color: grey;
+    background-color: rgb(27, 27, 27);
     border-bottom-style: solid;
     justify-content: flex-end;
     align-items: center;
     font-size: 36px;
-
-
+    color: orange;
 }
 
 button {
     width: 64px;
     height: 64px;
+    font-weight: 800;
+    font-size: 15px;
 }
 
+button:hover {
+    -webkit-box-shadow: inset -10px 0px 13px -3px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset -10px 0px 13px -3px rgba(0,0,0,0.3);
+    box-shadow: inset -5px 0px 13px -3px rgba(0,0,0,0.3);
+
+}
 #enter-btn {
     width: 128px;
     background-color: orange;
+    font-size: 18px;
 }
