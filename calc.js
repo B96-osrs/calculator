@@ -20,6 +20,7 @@ const buttonEnter = document.querySelector("#enter-btn");
 let operand1 = 0;
 let operand2 = 0;
 let operator;
+const calcContainer = document.querySelector(".calc-container");
 const display = document.querySelector("#display");
 
 function addNumber() {
@@ -40,6 +41,30 @@ function divideNumber() {
     }
     return parseInt(operand1) / parseInt(operand2);
 }
+
+function modNumber() {
+    let rest = operand1;
+    while(operand2 <= rest) {
+        rest = rest - operand2;
+    }
+    return rest;
+}
+
+function powNumber() {
+    let result = 1;
+    let base = operand1;
+    let exp = operand2;
+    if(exp > 1) {
+      for(let i = 0; i < exp; i++) {
+            result = result * base;        
+      }
+      return result;
+    }
+    if(exp === 1) {
+      return base;
+    }
+    return result;
+  };
 function calculateInput() {
     let displayArray = Array.from(display.textContent);
 
@@ -66,8 +91,23 @@ function calculateInput() {
         operand1 = displayArray[0];
         operand2 = displayArray[1];
         console.log(operand1 +" " + operand2)
-        return divideNumber(operand1,operand2);
+        return divideNumber();
     }
+    if(displayArray.includes("%")) {
+        const displayArray =  display.textContent.split("%")
+        operand1 = displayArray[0];
+        operand2 = displayArray[1];
+        console.log(operand1 +" " + operand2)
+        return modNumber();
+    }
+    if(displayArray.includes("^")) {
+        const displayArray =  display.textContent.split("^")
+        operand1 = displayArray[0];
+        operand2 = displayArray[1];
+        console.log(operand1 +" " + operand2)
+        return powNumber();
+    }
+    
     return "Error";
 }
 
@@ -92,25 +132,37 @@ function checkDisplayForOperator() {
 function checkDisplaySpace() {
     let displayArray = Array.from(display.textContent);
     console.log(displayArray);
-    if(displayArray.length < 14) {
+    if(displayArray.length < 13) {
         return true;
     }
     else{
         return false;
     }
 }
-
-
+function checkDisplayEmpty() {
+    if(display.textContent === "") {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 
 function updateDisplay() {
+
+    calcContainer.addEventListener("keydown", function(e) {
+        if(e.keyCode === 1) {
+            button1.click();
+        }
+    });
+     
     button1.addEventListener("click", function() {
         if(checkDisplaySpace()) {
-            display.textContent += "1";
-        }
-        
+           display.textContent += "1";
+       }
+       
     });
-
     button2.addEventListener("click", function() {
         if(checkDisplaySpace()) {
             display.textContent += "2";
@@ -160,32 +212,46 @@ function updateDisplay() {
         display.textContent = "";
     });
     buttonPlus.addEventListener("click", function() {
-        if(checkDisplaySpace()) {
+        if(checkDisplaySpace() && !checkDisplayEmpty()) {
             checkDisplayForOperator();
             operator = "+";
             display.textContent += "+";          
         }
+    });
+    buttonMod.addEventListener("click", function() {
+        if(checkDisplaySpace() && !checkDisplayEmpty()) {
+            checkDisplayForOperator();
+            operator = "%";
+            display.textContent += "%";          
+        }
 
     });
     buttonMinus.addEventListener("click", function() {
-        if(checkDisplaySpace()) {
+        if(checkDisplaySpace() && !checkDisplayEmpty()) {
             checkDisplayForOperator();
             operator = "-";
             display.textContent += "-";          
         }
     });
     buttonDivide.addEventListener("click", function() {
-        if(checkDisplaySpace()) {
+        if(checkDisplaySpace() && !checkDisplayEmpty()) {
             checkDisplayForOperator();
             operator = "/";
             display.textContent += "/";          
         }
     });
     buttonMultiply.addEventListener("click", function() {
-        if(checkDisplaySpace()) {
+        if(checkDisplaySpace() && !checkDisplayEmpty()) {
             checkDisplayForOperator();
             operator = "*";
             display.textContent += "*";          
+        }
+    });
+    buttonPower.addEventListener("click", function() {
+        if(checkDisplaySpace() && !checkDisplayEmpty()) {
+            checkDisplayForOperator();
+            operator = "^";
+            display.textContent += "^";          
         }
     });
     buttonEnter.addEventListener("click", function() {
@@ -196,6 +262,8 @@ function updateDisplay() {
 }
 
 updateDisplay();
+
+
 
 
 
