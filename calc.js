@@ -36,10 +36,10 @@ function multiplyNumber() {
 }
 
 function divideNumber() {
-    if(parseInt(operand2) === 0) {
+    if(parseFloat(operand2) === 0) {
         return "u stoopid?"
     }
-    return parseInt(operand1) / parseInt(operand2);
+    return parseFloat(operand1) / parseFloat(operand2);
 }
 
 function modNumber() {
@@ -73,28 +73,31 @@ function calculateInput() {
         displayArray =  display.textContent.split("+")
         operand1 = displayArray[0];
         operand2 = displayArray[1];
-        result = parseInt(operand1) + parseInt(operand2);
+        result = parseFloat(operand1) + parseFloat(operand2);
+        console.log(result);
+        console.log("op1 " + operand1);
+        console.log("op2 " + operand2);
+
         return checkNumberSize(result);
     }
     if(displayArray.includes("-")) {
         const displayArray =  display.textContent.split("-")
         operand1 = displayArray[0];
         operand2 = displayArray[1];
-        result =  parseInt(operand1) - parseInt(operand2);
+        result =  parseFloat(operand1) - parseFloat(operand2);
         return checkNumberSize(result);
     }
     if(displayArray.includes("*")) {
         const displayArray =  display.textContent.split("*")
         operand1 = displayArray[0];
         operand2 = displayArray[1];
-        result =  parseInt(operand1) * parseInt(operand2);
+        result =  parseFloat(operand1) * parseFloat(operand2);
         return checkNumberSize(result);
     }
     if(displayArray.includes("/")) {
         const displayArray =  display.textContent.split("/")
         operand1 = displayArray[0];
         operand2 = displayArray[1];
-        console.log(operand1 +" " + operand2)
         result = divideNumber();
         return checkNumberSize(result);
     }
@@ -102,7 +105,6 @@ function calculateInput() {
         const displayArray =  display.textContent.split("%")
         operand1 = displayArray[0];
         operand2 = displayArray[1];
-        console.log(operand1 +" " + operand2)
         result = modNumber();
         return checkNumberSize(result);
     }
@@ -110,42 +112,37 @@ function calculateInput() {
         const displayArray =  display.textContent.split("^")
         operand1 = displayArray[0];
         operand2 = displayArray[1];
-        console.log(operand1 +" " + operand2)
         result = powNumber();
         return checkNumberSize(result);
     }
-    
     return "Error";
 }
 function checkNumberSize(resultNumber) {
-    if(resultNumber <= 9999999999999) {
-      let numString = Math.floor(resultNumber).toString();
+    if(resultNumber <= 9999999999999 && resultNumber >= 0) {
+      let numString = (Math.floor(parseFloat(resultNumber.toFixed(12)))).toString();
       let resultNumberDigits = Array.from(numString).length;
       let convertedNumber = resultNumber.toFixed(13-resultNumberDigits);
-      let dec = (resultNumber - Math.floor(resultNumber));
+      let dec = (resultNumber - Math.floor(parseFloat(resultNumber.toFixed(12))));
       let decString = dec.toString();
       let decNumberDigits = Array.from(decString).length;
       if((decNumberDigits + resultNumberDigits) > 13) {
-        console.log("case 1: " + dec + " " + Math.floor(resultNumber)); 
-        return convertedNumber;
+        return shortenDecimal(convertedNumber);
       }
       else {       
+        console.log("case2");
         return resultNumber;                // without this if case every decimal number is displayed
                                             // with zeros at the end until display is full
       }
     }
     else {
-        return "number too big";
+        return "Error";
     }
 }
 
-
 function checkForDecimal() {
   let displayArray = Array.from(display.textContent);
-  console.log("displayArray: " + displayArray)
   if((displayArray[displayArray.length - 1] !== operator) && !checkDisplayEmpty()) {
     let wordArray = display.textContent.split(operator);
-    console.log("first if in checkfordecimal: " + wordArray.length);
     if(wordArray.length < 2 && !(wordArray[0].includes("."))) {
       return true;
     }
@@ -162,15 +159,12 @@ function checkDisplayForOperator() {
 
     let displayArray =  display.textContent.split(operator);
     displayArray = displayArray.filter(e => e !=="");
-    console.log(displayArray);
-      if(display.textContent.includes(operator)) {
-        console.log(displayArray.length);
+    console.log(operator);
+      if(display.textContent.includes(operator)) {     
         if(displayArray.length > 1) {
-            console.log("length > 1")
             buttonEnter.click();
         }
         else if(displayArray.length === 1 ) {
-            console.log("length === 1")
             display.textContent = display.textContent.slice(0,-1);
         }
       }
@@ -178,7 +172,6 @@ function checkDisplayForOperator() {
 
 function checkDisplaySpace() {
     let displayArray = Array.from(display.textContent);
-    console.log(displayArray);
     if(displayArray.length < 14) {
         return true;
     }
@@ -195,12 +188,74 @@ function checkDisplayEmpty() {
     }
 }
 
+function shortenDecimal(decimalNumber) {
+  let numberString = decimalNumber.toString();
+  let numberArray = Array.from(numberString);
+
+  while(numberArray[numberArray.length - 1 === "0"]) {
+    numberArray = numberArray.pop();
+  }
+  result = parseFloat(numberArray.join().replaceAll("," , ""));
+  return result;
+}
+
 
 function updateDisplay() {
 
-    document.body.addEventListener("keydown", function(e) {
-        if(e.keyCode === 1) {
+    window.addEventListener("keydown", function(e) {
+        switch (e.code) {
+          case "Numpad1":
+          case "Digit1":
             button1.click();
+            break;
+          case "Numpad2":
+          case "Digit2":
+            button2.click();
+            break;
+          case "Numpad3":
+          case "Digit3":
+            button3.click();
+            break;
+          case "Numpad4":
+          case "Digit4": 
+            button4.click();
+            break;
+          case "Numpad5":
+          case "Digit5":
+            button5.click();
+            break;
+          case "Numpad6":
+          case "Digit6": 
+            button6.click();
+            break;
+          case "Numpad7":
+          case "Digit7":
+            button7.click();
+            break;
+          case "Numpad8":
+          case "Digit8": 
+            button8.click();
+            break;
+          case "Numpad9":
+          case "Digit9":
+            button9.click();
+            break;
+          case "NumpadAdd":
+            buttonPlus.click();
+            break;
+          case "Period":
+          case "NumpadDecimal": 
+            buttonDecimal.click();
+            break;
+          case "NumpadSubstract":
+            buttonMinus.click();
+            break;
+          case "NumpadDivide":
+            buttonDivide.click();
+            break;
+          case "NumpadMultiply":
+            buttonMultiply.click();
+            break;
         }
     });
     buttonDecimal.addEventListener("click", function() {
@@ -313,10 +368,7 @@ function updateDisplay() {
     
 
 }
-
 updateDisplay();
-
-
 
 
 
