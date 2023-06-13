@@ -247,7 +247,7 @@ function updateDisplay() {
           case "NumpadDecimal": 
             buttonDecimal.click();
             break;
-          case "NumpadSubstract":
+          case "NumpadSubtract":
             buttonMinus.click();
             break;
           case "NumpadDivide":
@@ -255,6 +255,9 @@ function updateDisplay() {
             break;
           case "NumpadMultiply":
             buttonMultiply.click();
+            break;
+          case "NumpadEnter":
+            buttonEnter.click();
             break;
         }
     });
